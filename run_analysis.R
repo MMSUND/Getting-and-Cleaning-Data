@@ -19,14 +19,10 @@ subject_merge <- rbind(subject_train, subject_test)
 
 names(x_merge)
 names(y_merge)
-
-colnames(x_merge)
-colnames(y_merge)
-colnames(subject_merge)
+names(subject_merge)
 
 features <- read.table("UCI HAR Dataset\\features.txt", header = FALSE)
 names(x_merge)<-features[,2]
-
 names(y_merge)<-"Activity"
 names(subject_merge)<-"Subject"
 
@@ -71,7 +67,7 @@ t$Subject<-as.factor(t$Subject)
 
 
 
-colnames(t)
+names(t)
 names(t)<-gsub("-mean()", "Mean", names(t), ignore.case = TRUE)
 names(t)<-gsub("-std()", "STD", names(t), ignore.case = TRUE)
 names(t)<-gsub("()", "", names(t)) 
@@ -81,12 +77,12 @@ names(t)<-gsub("()", "", names(t))
 
 t$Activity <- as.factor(t$Activity)
 t$Subject <- as.factor(t$Subject)
-new_tidy_data <- aggregate(. ~ t$Activity + t$Subject, data = t, mean)
+new_tidy_data <- aggregate(. ~ Activity + Subject, data = t, mean)
 
 #Write into file
 write.table(new_tidy_data, file = "tidy_data_set_1.txt", sep = ",", row.name=FALSE, col.names = colnames(new_tidy_data), qmethod = "double")
 
 new_tidy_data
-
+View(new_tidy_data)
 
 
